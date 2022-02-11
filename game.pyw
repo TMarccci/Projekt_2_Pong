@@ -580,9 +580,15 @@ while True: # Main Game
             # P2
             if p1mode == False:
                 if event.key == pygame.K_UP:
-                    player2speedup = -5
+                    if s2enabled == True:
+                        player2speedup = -8
+                    else:
+                        player2speedup = -5
                 if event.key == pygame.K_DOWN:
-                    player2speeddown = 5 
+                    if s2enabled == True:
+                        player2speedup = 8
+                    else:
+                        player2speedup = 5
 
         if event.type == pygame.KEYUP:
             # P1
@@ -600,67 +606,3 @@ while True: # Main Game
     # Update screen
     pygame.display.flip()
     clock.tick(60)
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
