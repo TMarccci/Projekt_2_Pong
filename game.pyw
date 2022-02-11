@@ -586,9 +586,9 @@ while True: # Main Game
                         player2speedup = -5
                 if event.key == pygame.K_DOWN:
                     if s2enabled == True:
-                        player2speedup = 8
+                        player2speeddown = 8
                     else:
-                        player2speedup = 5
+                        player2speeddown = 5
 
         if event.type == pygame.KEYUP:
             # P1
