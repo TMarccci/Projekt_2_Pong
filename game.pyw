@@ -54,7 +54,8 @@ stateofplayermode = stateofbotpups = stateofpupsunblock = "" # And this is nothi
 pupall = True # Some settings states
 pupbot = True # Tho
 p1mode = True # Tho
-p2speedonBOT = 4.5 # Bot speed
+p2speedonBOTO = 4.5 # Bot speed
+p2speedonBOT = p2speedonBOTO
 
 # Power UP Time settings
 # P1
@@ -358,7 +359,12 @@ def player2prop():
             
 # AutoBot
 def player2BOT():
-    global p2speedonBOT
+    global p2speedonBOT, p2speedonBOTO
+    # Speed for powerup
+    if s2enabled == True:
+        p2speedonBOT = 8
+    else:
+        p2speedonBOT = p2speedonBOTO
 
     if waittime == 0: # Preventing move on countdown
         # Follow the ball
