@@ -5,7 +5,7 @@ import pygame, time, sys, os, threading, random, requests
 assetsloc = "C:\ProgramData\Pong_Game"
 font = "C:\ProgramData\Pong_Game\Roboto-Medium.ttf"
 iconpath = "C:\ProgramData\Pong_Game\Pong_game_icon_768px.png"
-if not os.path.exists(assetsloc):
+if not os.path.exists(assetsloc): # Downloading assets for game
     os.makedirs(assetsloc)
     url = "https://raw.githubusercontent.com/TMarccci/PongRemastered_Proj/master/assets/Pong_game_icon_768px.png"
     fname = assetsloc + "\Pong_game_icon_768px.png"
@@ -17,26 +17,25 @@ if not os.path.exists(assetsloc):
     r2 = requests.get(url2)
     open(fname2, 'wb').write(r2.content)
         
-pygame.init()
-clock = pygame.time.Clock()
+pygame.init() # Running pygame
+clock = pygame.time.Clock() # Define tick
 
 # Primary prop
-screenW = 1280
-screenH = 960
+screenW = 1280 # Screen resolution Width
+screenH = 960 # Screen resolution Height
 screenTitle = "Pong Remastered 99% Veszély!!4!44!!4"
-icon = pygame.image.load(iconpath)
-pygame.display.set_icon(icon)
-
-screen = pygame.display.set_mode((screenW, screenH))
-pygame.display.set_caption(screenTitle)
+icon = pygame.image.load(iconpath) # Icon import
+pygame.display.set_icon(icon) # Icon set
+screen = pygame.display.set_mode((screenW, screenH)) # Define screen
+pygame.display.set_caption(screenTitle) # Define screen title
 
 # Const vars
-ffam = pygame.font.Font(font, 30)
-ballspeed_x = ballspeed_y = 5
-waittimeo = 4
-waittime = waittimeo
-settingsdone = False
-exit = False
+ffam = pygame.font.Font(font, 30) # Font type for game
+ballspeed_x = ballspeed_y = 5 # Ball speed
+waittimeo = 4 # Waittime for ball to start
+waittime = waittimeo # Same
+settingsdone = False # State
+exit = False # State
 
 # Colors
 bgcolor = pygame.Color("grey12")
@@ -48,14 +47,14 @@ orange = (255,69,0)
 aqua = 	(0,255,255)
 
 # Zero Vars
-player1speedup = player1speeddown = player2speedup = player2speeddown = statp1 = statp2 = 0
-stateofplayermode = stateofbotpups = stateofpupsunblock = ""
+player1speedup = player1speeddown = player2speedup = player2speeddown = statp1 = statp2 = 0 # Yeah it is just 0
+stateofplayermode = stateofbotpups = stateofpupsunblock = "" # And this is nothing
 
 # BOT Settings and Play Mode
-pupall = True
-pupbot = True
-p1mode = True
-p2speedonBOT = 4.5
+pupall = True # Some settings states
+pupbot = True # Tho
+p1mode = True # Tho
+p2speedonBOT = 4.5 # Bot speed
 
 # Power UP Time settings
 # P1
@@ -80,7 +79,7 @@ tointer = 8 # To interval to powerups
 poweruptime = 6 # Duration of the powerup GL
 timeleft_w1 = timeleft_s1 = timeleft_w2 = timeleft_s2 = 0 # Setting duration for each
 
-# Elements
+# Elements and their pos
 ball = pygame.Rect(screenW/2 - 10, screenH/2 - 10, 20, 20,)
 player1 = pygame.Rect(50, screenH/2 - 60, 10, 120)
 player2 = pygame.Rect(screenW - 50, screenH/2 - 60, 10, 120)
@@ -93,9 +92,9 @@ speed2powerup = pygame.Rect(screenW - 50, -20, 10, 10)
 
 # Exit fc
 def exit():
-    global exit
-    
+    global exit # Exit state
     exit = True
+    
     pygame.quit
     sys.exit()
 
@@ -118,23 +117,25 @@ def ballfnc():
         
         # Goal
         if ball.colliderect(goal1):
+            # Ball reset
             ball.left = screenW/2 - 10
             ball.top = screenH/2 - 10
-            statp1 += 1
+            statp1 += 1 # Stat points
             
             # Ball Start Counter
-            waittime = waittimeo
+            waittime = waittimeo # Resetting wait time
             thread_wait = threading.Thread(target=ballstart,)
-            thread_wait.start()
+            thread_wait.start() # Start countdown on thread
         elif ball.colliderect(goal2):
+            # Ball reset
             ball.left = screenW/2 - 10
             ball.top = screenH/2 - 10
-            statp2 += 1
+            statp2 += 1 # Stat points
             
             # Ball Start Counter
-            waittime = waittimeo
+            waittime = waittimeo # Resetting wait time
             thread_wait = threading.Thread(target=ballstart,)
-            thread_wait.start() 
+            thread_wait.start() # Start countdown on thread
 def ballstart():
     global waittime, exit
     
@@ -154,7 +155,7 @@ def timeleft_w1tl():
 
     while timeleft_w1 > 0: # Countdown
         timeleft_w1 -= 1
-        for i in range(100):
+        for i in range(100): # Safesleep
             time.sleep(0.01)
             if exit == True:
                 break
@@ -167,7 +168,7 @@ def timeleft_w2tl():
 
     while timeleft_w2 > 0: # Countdown
         timeleft_w2 -= 1
-        for i in range(100):
+        for i in range(100): # Safesleep
             time.sleep(0.01)
             if exit == True:
                 break
@@ -182,7 +183,7 @@ def timeleft_s1tl():
 
     while timeleft_s1 > 0: # Countdown
         timeleft_s1 -= 1
-        for i in range(100):
+        for i in range(100): # Safesleep
             time.sleep(0.01)
             if exit == True:
                 break
@@ -194,7 +195,7 @@ def timeleft_s2tl():
 
     while timeleft_s2 > 0: # Countdown
         timeleft_s2 -= 1
-        for i in range(100):
+        for i in range(100): # Safesleep
             time.sleep(0.01)
             if exit == True:
                 break
@@ -211,17 +212,18 @@ def spawncalc1():
 
     if pupvis1 == False: # Check if is there any powerups visible
         blocker1 = True
-        for i in range(randint(frominter,tointer)*100):
-            time.sleep(0.01)
+        for i in range(randint(frominter,tointer)*100): # Calculated spawntime
+            time.sleep(0.01) # Safesleep
             if exit == True:
                 break
+        # Show the selected one (randompup1)
         if randompup1 == 0:
-            pupvis1 = True
-            blocker1 = False
+            pupvis1 = True # Some state
+            blocker1 = False # -II-
             powerup1wider.y = random.randrange(10, 950)
         elif randompup1 == 1:
-            pupvis1 = True
-            blocker1 = False
+            pupvis1 = True # Some state
+            blocker1 = False # -II-
             speed1powerup.y = random.randrange(10, 950)
 # P2
 def spawncalc2():
@@ -232,17 +234,18 @@ def spawncalc2():
 
     if pupvis2 == False: # Check if is there any powerups visible
         blocker2 = True
-        for i in range(randint(frominter,tointer)*100):
-            time.sleep(0.01)
+        for i in range(randint(frominter,tointer)*100): # Calculated spawntime
+            time.sleep(0.01) # Safesleep
             if exit == True:
                 break
+        # Show the selected one (randompup2)
         if randompup2 == 0:
-            pupvis2 = True
-            blocker2 = False
+            pupvis2 = True # Some state
+            blocker2 = False # -II-
             powerup2wider.y = random.randrange(10, 950)
         elif randompup2 == 1:
-            pupvis2 = True
-            blocker2 = False
+            pupvis2 = True # Some state
+            blocker2 = False # -II-
             speed2powerup.y = random.randrange(10, 950)
                 
 # Player1
@@ -278,9 +281,9 @@ def player1prop():
 
         # If you pickup a powerup while you have an anotherone add time to it
         if timeleft_w1 > 0:
-            timeleft_w1 += poweruptime
+            timeleft_w1 += poweruptime # Adding poweruptime to timeleft powerup
         else:
-            timeleft_w1 = poweruptime
+            timeleft_w1 = poweruptime # Resetting powerup timeleft
             thread_w1tl = threading.Thread(target=timeleft_w1tl,)
             thread_w1tl.start() # Start timer and more
 
@@ -293,9 +296,9 @@ def player1prop():
 
         # If you pickup a powerup while you have an anotherone add time to it
         if timeleft_s1 > 0:
-            timeleft_s1 += poweruptime
+            timeleft_s1 += poweruptime # Adding poweruptime to timeleft powerup
         else:
-            timeleft_s1 = poweruptime
+            timeleft_s1 = poweruptime # Resetting powerup timeleft
             thread_s1tl = threading.Thread(target=timeleft_s1tl,)
             thread_s1tl.start() # Start timer and more
 
@@ -332,9 +335,9 @@ def player2prop():
 
         # If you pickup a powerup while you have an anotherone add time to it
         if timeleft_w2 > 0:
-            timeleft_w2 += poweruptime
+            timeleft_w2 += poweruptime # Adding poweruptime to timeleft powerup
         else:
-            timeleft_w2 = poweruptime
+            timeleft_w2 = poweruptime # Resetting powerup timeleft
             thread_w2tl = threading.Thread(target=timeleft_w2tl,)
             thread_w2tl.start() # Start timer and more
 
@@ -347,9 +350,9 @@ def player2prop():
 
         # If you pickup a powerup while you have an anotherone add time to it
         if timeleft_s2 > 0:
-            timeleft_s2 += poweruptime
+            timeleft_s2 += poweruptime # Adding poweruptime to timeleft powerup
         else:
-            timeleft_s2 = poweruptime
+            timeleft_s2 = poweruptime # Resetting powerup timeleft
             thread_s2tl = threading.Thread(target=timeleft_s2tl,)
             thread_s2tl.start() # Start timer and more
             
@@ -357,7 +360,8 @@ def player2prop():
 def player2BOT():
     global p2speedonBOT
 
-    if waittime == 0:
+    if waittime == 0: # Preventing move on countdown
+        # Follow the ball
         if ball.y >= player2.y:
             player2.y += p2speedonBOT
         elif ball.y <= player2.y:
@@ -366,65 +370,71 @@ def player2BOT():
 # Displays
 def displays():
     # Scoreboards
+    # P1
     statp1_text = ffam.render(f"{statp1}", False, lightgrey)
     screen.blit(statp1_text, (screenW/2+50, 20))
+    # P2
     statp2_text = ffam.render(f"{statp2}", False, lightgrey)
     screen.blit(statp2_text, (screenW/2-55, screenH-50))
     
     # Wait display
     wait_text = ffam.render(f"{waittime}", False, lightgrey)
     if waittime > 0:
-        screen.blit(wait_text, (screenW/2-50, screenH/2-19))
+        screen.blit(wait_text, (screenW/2-50, screenH/2-19)) # Show
     else:
-        screen.blit(wait_text, (screenW/2-50, -50))
+        screen.blit(wait_text, (screenW/2-50, -50)) # Hide
 
     # Powerups timeleft
     # Wide
     # P1
-    w1_timeleft = ffam.render(f"{timeleft_w1}", False, orange)
+    w1_timeleft = ffam.render(f"{timeleft_w1}", False, orange) # Define timeleft counter
     if hiddenw1l == True:
-        screen.blit(w1_timeleft, (screenW/2-100, screenH+50)) 
+        screen.blit(w1_timeleft, (screenW/2-100, screenH+50)) # Hide
     else:
-        screen.blit(w1_timeleft, (screenW/2-100, screenH-50))
+        screen.blit(w1_timeleft, (screenW/2-100, screenH-50)) # Show
     # P2
-    w2_timeleft = ffam.render(f"{timeleft_w2}", False, orange)
+    w2_timeleft = ffam.render(f"{timeleft_w2}", False, orange) # Define timeleft counter
     if hiddenw2l == True:
-        screen.blit(w2_timeleft, (screenW/2+105, -50)) 
+        screen.blit(w2_timeleft, (screenW/2+105, -50)) # Hide
     else:
-        screen.blit(w2_timeleft, (screenW/2+105, 20))
+        screen.blit(w2_timeleft, (screenW/2+105, 20)) # Show
         
     # Speed
     # P1
-    s1_timeleft = ffam.render(f"{timeleft_s1}", False, aqua)
+    s1_timeleft = ffam.render(f"{timeleft_s1}", False, aqua) # Define timeleft counter
     if hiddens1l == True:
-        screen.blit(s1_timeleft, (screenW/2-150, screenH+50))
+        screen.blit(s1_timeleft, (screenW/2-150, screenH+50)) # Hide
     else:
-        screen.blit(s1_timeleft, (screenW/2-150, screenH-50))
+        screen.blit(s1_timeleft, (screenW/2-150, screenH-50)) # Show
     # P2
-    s2_timeleft = ffam.render(f"{timeleft_s2}", False, aqua)
+    s2_timeleft = ffam.render(f"{timeleft_s2}", False, aqua) # Define timeleft counter
     if hiddens2l == True:
-        screen.blit(s2_timeleft, (screenW/2+155, -50))
+        screen.blit(s2_timeleft, (screenW/2+155, -50)) # Hide
     else:
-        screen.blit(s2_timeleft, (screenW/2+155, 20))
+        screen.blit(s2_timeleft, (screenW/2+155, 20)) # Show
 
-while settingsdone == False:
+while settingsdone == False: # Settings screen
+    # Parsing values to string
+    # Player count
     if p1mode == True:
         stateofplayermode = "1"
     elif p1mode == False:
         stateofplayermode = "2"
-    
+        
+    # State of powerups
     if pupall == True:
         stateofpupsunblock = "Igen"
     elif pupall == False:
         stateofpupsunblock = "Nem"
-    
+        
+    # State of bot's powerups
     if pupbot == True:
         stateofbotpups = "Igen"
     elif pupbot == False:
         stateofbotpups = "Nem"
-        
-    screen.fill(bgcolor)
     
+    # Visual text's
+    screen.fill(bgcolor)
     stateofplayermod = ffam.render(f"{stateofplayermode}" + " Játékos", False, lightgrey)
     stateofplayermod_desc = ffam.render(f"Egyszemélyes (Automate ellenfél) vagy kétszemélyes játék (1=P1 / 2=P2)", False, lightgrey)
     stateofbotpups = ffam.render(f"{stateofbotpups}", False, lightgrey)
@@ -436,6 +446,7 @@ while settingsdone == False:
     puptime = ffam.render(f"{poweruptime-1}" + "s", False, lightgrey)
     puptime_desc = ffam.render(f"Powerup hatásidőtartam (Bal nyíl - 1s, Jobb nyíil + 1s)", False, lightgrey)
     
+    # Showing visual things in their order
     screen.blit(stateofplayermod_desc, (25, 20))
     screen.blit(stateofplayermod, (25, 50))
     
@@ -497,12 +508,13 @@ while settingsdone == False:
     
 # Ball Start Counter
 thread_wait = threading.Thread(target=ballstart,)
-thread_wait.start()    
+thread_wait.start() # Starting countdown on thread
 
-while True:
+while True: # Main Game
     # Visual, displaying elements
     screen.fill(bgcolor)
     
+    # Displaying visual things
     pygame.draw.rect(screen, white, ball)
     pygame.draw.rect(screen, white, player1)
     pygame.draw.rect(screen, white, player2)
@@ -588,4 +600,67 @@ while True:
     # Update screen
     pygame.display.flip()
     clock.tick(60)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
