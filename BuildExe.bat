@@ -1,7 +1,7 @@
 @echo off
 echo To build press enter
 pause
-pyinstaller --onefile --icon=assets/icon.ico game.pyw
+pyinstaller --onefile --icon=assets/pongicon.ico game.pyw
 echo To delete junk and move file out press enter
 pause
 rmdir /Q /s build

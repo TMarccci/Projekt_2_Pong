@@ -4,11 +4,11 @@ import pygame, time, sys, os, threading, random, requests
 # Important
 assetsloc = "C:\ProgramData\Pong_Game"
 font = "C:\ProgramData\Pong_Game\Roboto-Medium.ttf"
-iconpath = "C:\ProgramData\Pong_Game\Pong_game_icon_768px.png"
+iconpath = "C:\ProgramData\Pong_Game\pongicon.png"
 if not os.path.exists(assetsloc): # Downloading assets for game
     os.makedirs(assetsloc)
-    url = "https://raw.githubusercontent.com/TMarccci/PongRemastered_Proj/master/assets/Pong_game_icon_768px.png"
-    fname = assetsloc + "\Pong_game_icon_768px.png"
+    url = "https://raw.githubusercontent.com/TMarccci/PongRemastered_Proj/master/assets/pongicon.png"
+    fname = assetsloc + "\pongicon.png"
     r = requests.get(url)
     open(fname, 'wb').write(r.content)
     
