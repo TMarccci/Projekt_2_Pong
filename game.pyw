@@ -6,12 +6,17 @@ assetsloc = "C:\ProgramData\Pong_Game"
 font = "C:\ProgramData\Pong_Game\Roboto-Medium.ttf"
 iconpath = "C:\ProgramData\Pong_Game\Pong_game_icon_768px.png"
 if not os.path.exists(assetsloc):
-        os.makedirs(assetsloc)
-        url = "https://raw.githubusercontent.com/TMarccci/YTDownloader/master/WindowsInstaller/WindowsInstaller.bat"
-        fname = assetsloc + "\Asd.vmi"
-        r = requests.get(url)
-        open(fname, 'wb').write(r.content)
-
+    os.makedirs(assetsloc)
+    url = "https://raw.githubusercontent.com/TMarccci/PongRemastered_Proj/master/assets/Pong_game_icon_768px.png"
+    fname = assetsloc + "\Pong_game_icon_768px.png"
+    r = requests.get(url)
+    open(fname, 'wb').write(r.content)
+    
+    url2 = "https://raw.githubusercontent.com/TMarccci/PongRemastered_Proj/master/assets/Roboto-Medium.ttf"
+    fname2 = assetsloc + "\Roboto-Medium.ttf"
+    r2 = requests.get(url2)
+    open(fname2, 'wb').write(r2.content)
+        
 pygame.init()
 clock = pygame.time.Clock()
 
