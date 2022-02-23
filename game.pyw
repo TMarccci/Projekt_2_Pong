@@ -1,36 +1,69 @@
 from random import randrange, randint
 import pygame, time, sys, os, threading, random, requests
+import platform #MacOS Support
 
 # Important
-assetsloc = "C:\ProgramData\Pong_Game"
-font = "C:\ProgramData\Pong_Game\Roboto-Medium.ttf"
-iconpath = "C:\ProgramData\Pong_Game\pongicon.png"
-if not os.path.exists(assetsloc): # Downloading assets for game
-    os.makedirs(assetsloc)
-    url = "https://raw.githubusercontent.com/TMarccci/PongRemastered_Proj/master/assets/pongicon.png"
-    fname = assetsloc + "\pongicon.png"
-    r = requests.get(url)
-    open(fname, 'wb').write(r.content)
-    
-    url2 = "https://raw.githubusercontent.com/TMarccci/PongRemastered_Proj/master/assets/Roboto-Medium.ttf"
-    fname2 = assetsloc + "\Roboto-Medium.ttf"
-    r2 = requests.get(url2)
-    open(fname2, 'wb').write(r2.content)
+# Path for Windows
+assetslocw = "C:\ProgramData\Pong_Game"
+fontw = "C:\ProgramData\Pong_Game\Roboto-Medium.ttf"
+iconpathw = "C:\ProgramData\Pong_Game\pongicon.png"
+
+# Path for macOS
+assetslocm = os.path.join(os.path.join(os.path.expanduser('~')), '.ponggame')
+fontm = assetslocm + "/Roboto-Medium.ttf"
+iconpathm = assetslocm + "/pongicon.png"
+
+opSystem = platform.system()
+
+if opSystem == "Windows":
+    if not os.path.exists(assetslocw): # Downloading assets for game Windows
+        os.makedirs(assetslocw)
+        url = "https://raw.githubusercontent.com/TMarccci/PongRemastered_Proj/master/assets/pongicon.png"
+        fname = assetslocw + "\pongicon.png"
+        r = requests.get(url)
+        open(fname, 'wb').write(r.content)
+        
+        url2 = "https://raw.githubusercontent.com/TMarccci/PongRemastered_Proj/master/assets/Roboto-Medium.ttf"
+        fname2 = assetslocw + "\Roboto-Medium.ttf"
+        r2 = requests.get(url2)
+        open(fname2, 'wb').write(r2.content)
+elif opSystem == "Darwin":
+    if not os.path.exists(assetslocm): # Downloading assets for game macOS
+        os.makedirs(assetslocm)
+        url = "https://raw.githubusercontent.com/TMarccci/PongRemastered_Proj/master/assets/pongicon.png"
+        fname = assetslocm + "/pongicon.png"
+        r = requests.get(url)
+        open(fname, 'wb').write(r.content)
+        
+        url2 = "https://raw.githubusercontent.com/TMarccci/PongRemastered_Proj/master/assets/Roboto-Medium.ttf"
+        fname2 = assetslocm + "/Roboto-Medium.ttf"
+        r2 = requests.get(url2)
+        open(fname2, 'wb').write(r2.content)
+
         
 pygame.init() # Running pygame
 clock = pygame.time.Clock() # Define tick
 
 # Primary prop
-screenW = 1280 # Screen resolution Width
-screenH = 960 # Screen resolution Height
 screenTitle = "Pong Remastered 99% Veszély!!4!44!!4"
-icon = pygame.image.load(iconpath) # Icon import
-pygame.display.set_icon(icon) # Icon set
+if opSystem == "Windows":
+    icon = pygame.image.load(iconpathw) # Icon import
+    pygame.display.set_icon(icon) # Icon set
+    screenW = 1280 # Screen resolution Width
+    screenH = 960 # Screen resolution Height
+elif opSystem == "Darwin":
+    icon = pygame.image.load(iconpathm) # Icon import
+    pygame.display.set_icon(icon) # Icon set
+    screenW = 1280 # Screen resolution Width
+    screenH = 770 # Screen resolution Height
 screen = pygame.display.set_mode((screenW, screenH)) # Define screen
 pygame.display.set_caption(screenTitle) # Define screen title
 
 # Const vars
-ffam = pygame.font.Font(font, 30) # Font type for game
+if opSystem == "Windows":
+    ffam = pygame.font.Font(fontw, 30) # Font type for game
+elif opSystem == "Darwin":
+    ffam = pygame.font.Font(fontm, 30) # Font type for game
 ballspeed_x = ballspeed_y = 5 # Ball speed
 waittimeo = 4 # Waittime for ball to start
 waittime = waittimeo # Same
@@ -221,11 +254,11 @@ def spawncalc1():
         if randompup1 == 0:
             pupvis1 = True # Some state
             blocker1 = False # -II-
-            powerup1wider.y = random.randrange(10, 950)
+            powerup1wider.y = random.randrange(10, screenH - 10)
         elif randompup1 == 1:
             pupvis1 = True # Some state
             blocker1 = False # -II-
-            speed1powerup.y = random.randrange(10, 950)
+            speed1powerup.y = random.randrange(10, screenH - 10)
 # P2
 def spawncalc2():
     global randompup2, w2enabled, s2enabled, pupvis2, blocker2, exit
@@ -243,11 +276,11 @@ def spawncalc2():
         if randompup2 == 0:
             pupvis2 = True # Some state
             blocker2 = False # -II-
-            powerup2wider.y = random.randrange(10, 950)
+            powerup2wider.y = random.randrange(10, screenH - 10)
         elif randompup2 == 1:
             pupvis2 = True # Some state
             blocker2 = False # -II-
-            speed2powerup.y = random.randrange(10, 950)
+            speed2powerup.y = random.randrange(10, screenH - 10)
                 
 # Player1
 # Movement
